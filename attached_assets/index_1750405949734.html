@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NewsFlash247</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>📰 NewsFlash247 - Breaking News</h1>
+  {% for item in news %}
+    <div class="news-card">
+      <h2>{{ item.title }}</h2>
+      <p>{{ item.content }}</p>
+    </div>
+  {% endfor %}
+  <a href="/login">Login</a> | 
+  <a href="/register">Register</a> | 
+  <a href="/subscribe">Subscribe to Newsletter</a>
+</body>
+</html>

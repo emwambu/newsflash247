@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - NewsFlash247{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2">
+            <i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard
+        </h1>
+        <div class="btn-group" role="group">
+            <a href="{{ url_for('admin_new_article') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>New Article
+            </a>
+            <a href="{{ url_for('admin_newsletter') }}" class="btn btn-success">
+                <i class="fas fa-envelope me-2"></i>Newsletter
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">{{ stats.total_articles }}</h4>
+                            <p class="mb-0">Total Articles</p>
+                        </div>
+                        <i class="fas fa-newspaper fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">{{ stats.total_subscribers }}</h4>
+                            <p class="mb-0">Active Subscribers</p>
+                        </div>
+                        <i class="fas fa-users fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">{{ stats.total_views }}</h4>
+                            <p class="mb-0">Total Views</p>
+                        </div>
+                        <i class="fas fa-eye fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">{{ stats.emails_sent }}</h4>
+                            <p class="mb-0">Emails Sent</p>
+                        </div>
+                        <i class="fas fa-envelope fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Articles -->
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-newspaper me-2"></i>Recent Articles
+                    </h5>
+                    <a href="{{ url_for('admin_articles') }}" class="btn btn-outline-primary btn-sm">
+                        View All <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if recent_articles %}
+                        <div class="list-group list-group-flush">
+                            {% for article in recent_articles %}
+                            <div class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{ article.title }}</div>
+                                    <small class="text-muted">
+                                        By {{ article.author.full_name }} • {{ article.created_at.strftime('%B %d, %Y') }}
+                                    </small>
+                                    <div class="mt-1">
+                                        {% if article.is_breaking %}
+                                        <span class="badge bg-danger me-1">Breaking</span>
+                                        {% endif %}
+                                        <span class="badge bg-secondary me-1">{{ article.category }}</span>
+                                        {% if article.is_published %}
+                                        <span class="badge bg-success">Published</span>
+                                        {% else %}
+                                        <span class="badge bg-warning">Draft</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-muted">{{ article.views_count }} views</small>
+                                    <div class="btn-group btn-group-sm mt-1" role="group">
+                                        <a href="{{ url_for('admin_edit_article', article_id=article.id) }}" 
+                                           class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center py-3">No articles yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Subscribers & Quick Actions -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('admin_new_article') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Create Article
+                        </a>
+                        <a href="{{ url_for('admin_articles') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-newspaper me-2"></i>Manage Articles
+                        </a>
+                        <a href="{{ url_for('admin_subscribers') }}" class="btn btn-outline-success">
+                            <i class="fas fa-users me-2"></i>View Subscribers
+                        </a>
+                        <a href="{{ url_for('admin_newsletter') }}" class="btn btn-outline-info">
+                            <i class="fas fa-envelope me-2"></i>Send Newsletter
+                        </a>
+                        <a href="{{ url_for('admin_settings') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-users me-2"></i>Recent Subscribers
+                    </h5>
+                    <a href="{{ url_for('admin_subscribers') }}" class="btn btn-outline-primary btn-sm">
+                        View All
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if recent_subscribers %}
+                        <div class="list-group list-group-flush">
+                            {% for subscriber in recent_subscribers %}
+                            <div class="list-group-item px-0">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <small class="fw-bold">{{ subscriber.email }}</small>
+                                        <br>
+                                        <small class="text-muted">{{ subscriber.subscribed_at.strftime('%b %d, %Y') }}</small>
+                                    </div>
+                                    <span class="badge bg-{{ 'success' if subscriber.is_active else 'secondary' }}">
+                                        {{ subscriber.status }}
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center py-3">No subscribers yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

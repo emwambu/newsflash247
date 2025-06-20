@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - NewsFlash247{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h2">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                </h1>
+                <div class="text-muted">
+                    Welcome back, <strong>{{ user }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- User Stats -->
+        <div class="col-md-4 mb-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">Profile</h4>
+                            <p class="mb-0">{{ user }}</p>
+                        </div>
+                        <i class="fas fa-user fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">Newsletter</h4>
+                            <p class="mb-0">{{ subscriber_count }} Subscribers</p>
+                        </div>
+                        <i class="fas fa-envelope fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="card-title mb-0">Status</h4>
+                            <p class="mb-0">Active User</p>
+                        </div>
+                        <i class="fas fa-check-circle fa-2x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Quick Actions -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="{{ url_for('home') }}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-home me-2"></i>View Latest News
+                        </a>
+                        <a href="{{ url_for('subscribe') }}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-envelope me-2"></i>Manage Newsletter
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action text-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-clock me-2"></i>Recent Activity
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item mb-3">
+                            <div class="timeline-marker bg-primary"></div>
+                            <div class="timeline-content">
+                                <p class="mb-1"><strong>Logged in</strong></p>
+                                <small class="text-muted">Just now</small>
+                            </div>
+                        </div>
+                        <div class="timeline-item mb-3">
+                            <div class="timeline-marker bg-info"></div>
+                            <div class="timeline-content">
+                                <p class="mb-1"><strong>Account created</strong></p>
+                                <small class="text-muted">Earlier today</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Preview -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-newspaper me-2"></i>Featured News
+                    </h5>
+                    <a href="{{ url_for('home') }}" class="btn btn-outline-primary btn-sm">
+                        View All <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Stay updated with the latest breaking news and stories from around the world.</p>
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-globe fa-2x text-primary mb-2"></i>
+                            <h6>Global Coverage</h6>
+                            <small class="text-muted">Worldwide news updates</small>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-clock fa-2x text-success mb-2"></i>
+                            <h6>Real-time Updates</h6>
+                            <small class="text-muted">Breaking news as it happens</small>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-mobile-alt fa-2x text-info mb-2"></i>
+                            <h6>Mobile Friendly</h6>
+                            <small class="text-muted">Access anywhere, anytime</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
