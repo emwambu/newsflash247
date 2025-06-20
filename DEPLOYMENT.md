@@ -67,8 +67,8 @@ python main.py
 ## Database Setup
 
 The application automatically creates tables on first run. The default admin account:
-- **Email:** admin@newsflash247.com
-- **Password:** admin123
+- **Email:** 
+- **Password:**
 
 Change this password immediately after first login.
 
